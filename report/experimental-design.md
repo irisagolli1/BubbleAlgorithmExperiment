@@ -16,7 +16,7 @@ Hypothesis are predictions -> the final result may or may not support them. They
 - **H1:** Under the same conditions, the three Bubble sort algorithms will have different execution times  
 - **H2:** BubbleSortPassPerItem will be slower because it performs a specific number of passes, even if array is sorted.  
 - **H3:** BuubleSortUntilNoChange and BubbleSortWhileNeeded will perform better on sorted and nearly sorted arrays compared to the others because they can stop when they see that there is a need for more swaps.  
-- **H4:** Execution time will increase as input size decreases.
+- **H4:** Execution time will increase as input size increases.
 
 ## 4. Variables
 Variables are categorized in: Independent, Dependent and Controlled Variables.
