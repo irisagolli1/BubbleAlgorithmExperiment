@@ -13,10 +13,10 @@ How does the choice of Bubble Sort implementation affect execution time for diff
 ## 3. Hypothesis
 Hypothesis are predictions -> the final result may or may not support them. They will be evaluated using measurements that are collected in the experiment.
 
-- **H1:** Under the same conditions, the three Bubble sort algorithms will have different execution times  
-- **H2:** BubbleSortPassPerItem will be slower because it performs a specific number of passes, even if array is sorted.  
-- **H3:** BuubleSortUntilNoChange and BubbleSortWhileNeeded will perform better on sorted and nearly sorted arrays compared to the others because they can stop when they see that there is no need for more swaps.  
-- **H4:** Execution time will increase as input size increases.
+- **H1:** Under the same conditions, the three Bubble sort algorithms will have different execution times. *Independent variable:* Sorting Algorithm. *Dependent variable:* Execution time(in ns)
+- **H2:** BubbleSortPassPerItem will be slower because it performs a specific number of passes, even if array is sorted. *Independent variable:* Sorting Algorithm and input type. *Dependent variable:* Execution time(in ns)
+- **H3:** BuubleSortUntilNoChange and BubbleSortWhileNeeded will perform better on sorted and nearly sorted arrays compared to the others because they can stop when they see that there is no need for more swaps. *Independent variable:* Sorting Algorithm and input type. *Dependent variable:* Execution time(in ns)
+- **H4:** Execution time will increase as input size increases. *Independent variable:* Input type. *Dependent variable:* Execution time(in ns)
 
 ## 4. Variables
 Variables are categorized in: Independent, Dependent and Controlled Variables.
