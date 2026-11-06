@@ -15,6 +15,7 @@ import os
 import numpy as np
 import pandas as pd
 import matplotlib
+import itertools
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
@@ -141,3 +142,39 @@ print("Rows:", len(d), "| configs:", s.shape[0], "| reps per config:", s["n"].un
 print("\nWinner (lowest median) per condition:")
 for (inp, n), row in med[ALGS].iterrows():
     print(f"  {inp:14s} n = {n:5d} -> {row.idxmin()}")
+
+
+# ---------- extra statistics ----------
+
+# (a) Scaling: slope of a least-squares line through log(median time) vs log(array size)
+# A slope of about 2 means time grows roughly with n^2, about 1 roughly linearly
+rows = []
+for (inp, a), g in s.groupby(["input", "alg"]):
+    g = g.sort_values("size")
+    rows.append((inp, a, np.polyfit(np.log(g["size"]), np.log(g["median"]), 1)[0]))
+pd.DataFrame(rows, columns=["input", "alg", "loglog_slope"]).to_csv(
+    os.path.join(HERE, "scaling_slopes.csv"), index=False, float_format="%.2f")
+
+# (b) Do the boxes (interquartile ranges Q1-Q3) of two algorithms overlap?
+qi = s.set_index(["size", "input", "alg"])
+rows = []
+for n in SIZES:
+    for inp in INPUTS:
+        for a, b in itertools.combinations(ALGS, 2):
+            A, B = qi.loc[(n, inp, a)], qi.loc[(n, inp, b)]
+            rows.append((n, inp, f"{a} vs {b}", not (A["q3"] < B["q1"] or B["q3"] < A["q1"])))
+ov = pd.DataFrame(rows, columns=["size", "input", "pair", "iqr_overlap"])
+ov.to_csv(os.path.join(HERE, "iqr_overlap.csv"), index=False)
+
+# (c) Outliers: measurements beyond 1.5 x IQR from the box (the dots in the box plots)
+def tukey(x):
+    lo, hi = x.quantile(.25), x.quantile(.75)
+    iqr = hi - lo
+    return pd.Series({"slow_outliers": (x > hi + 1.5 * iqr).sum(),
+                      "fast_outliers": (x < lo - 1.5 * iqr).sum()})
+out = d.groupby(["size", "input", "alg"])["ns"].apply(tukey).unstack().reset_index()
+out.to_csv(os.path.join(HERE, "outliers.csv"), index=False)
+
+print("\nBox pairs that overlap:", int(ov["iqr_overlap"].sum()), "of", len(ov))
+print("Outliers: slow =", int(out["slow_outliers"].sum()), "fast =", int(out["fast_outliers"].sum()),
+      "| conditions with at least one:", int(((out["slow_outliers"] + out["fast_outliers"]) > 0).sum()), "of", len(out))

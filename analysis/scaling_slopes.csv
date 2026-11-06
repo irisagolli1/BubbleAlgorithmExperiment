@@ -1,0 +1,13 @@
+input,alg,loglog_slope
+NEARLY_SORTED,PassPerItem,1.95
+NEARLY_SORTED,UntilNoChange,2.17
+NEARLY_SORTED,WhileNeeded,2.22
+RANDOM,PassPerItem,1.91
+RANDOM,UntilNoChange,1.92
+RANDOM,WhileNeeded,1.86
+REVERSE,PassPerItem,1.90
+REVERSE,UntilNoChange,1.92
+REVERSE,WhileNeeded,1.92
+SORTED,PassPerItem,1.98
+SORTED,UntilNoChange,0.89
+SORTED,WhileNeeded,0.89
