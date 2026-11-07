@@ -11,21 +11,37 @@ This project compares the execution time of three Bubble Sort implementations:
 - Terminal / Java-compatible IDE
 
 ## Project Structure
- `src/exp01/`  -    Java source files
- `results/`    -    Raw experimental data
- `report/`     -    Experimental design and report
+- `src/exp01/`           -    Java source files
+- `results/`             -    Raw experimental data
+- `report/`              -    Experimental design and report
+- `analysis/`            -    Analysis script and statistics (CSV)
+- `analysis/figures/`    -    Figures used in the report
 
 ## Compilation
 From the project root directory, run: 
+
 **javac -d out src/exp01/*.java**
 
 ## Execution
 Run the benchmark using:
+
 **java -cp out exp01.Benchmark**
 
 ## Results
 The benchmark saves raw execution-time measurements to CSV file:
+
 **results/raw-data.csv**
+
+## Analysis
+From the project root: 
+
+**python3 -m pip install pandas numpy matplotlib**
+
+then: 
+
+**python3 analysis/analyze.py**
+
+This writes the statistics (CSV) and figures into analysis/.
 
 ## Measurement Procedure
 - Execution time is measured using `System.nanoTime()`.
